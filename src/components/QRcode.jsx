@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import '../Styles/QrCode.css'
 const QrCode = () => {
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
