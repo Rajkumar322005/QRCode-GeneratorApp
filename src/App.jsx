@@ -1,7 +1,7 @@
 import React from 'react'
-import Prop from './components/prop.jsx'
-import UserCart from './components/UserCart.jsx'
+import './styles/QRcode.css'
 import QRCodeGenerator from './components/QRcode.jsx'
+
 const App = () => {
   return (
     <div>
