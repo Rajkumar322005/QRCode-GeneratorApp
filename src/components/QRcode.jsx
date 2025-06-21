@@ -1,14 +1,22 @@
 import React, { useState } from "react";
+
 const QrCode = () => {
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
   const [qrData, setQrData] = useState("");
   const [qrSize, setQrSize] = useState("150");
+  const [error, setError] = useState(""); // new state for error
 
   const generateQR = async () => {
+    if (!qrData.trim()) {
+      setError("Please fill in the data to generate a QR code.");
+      return;
+    }
+
+    setError(""); // clear any previous error
     setLoading(true);
+
     try {
-      // use backticks for template string
       const url = `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(qrData)}`;
       setImg(url);
     } catch (error) {
@@ -38,6 +46,7 @@ const QrCode = () => {
       <h1>QR CODE GENERATOR</h1>
 
       {loading && <p>Please wait...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
       {img && <img src={img} alt="QR Code" className="qr-code-image" />}
 
       <div className="controls">
@@ -83,9 +92,10 @@ const QrCode = () => {
       </div>
 
       <p className="footer">
-        Designed By <span style ={{color:"yellow"}}>Rajesh </span>
+        Designed By <span style={{ color: "yellow" }}>Rajesh</span>
       </p>
     </div>
   );
 };
-export default QrCode
+
+export default QrCode;
