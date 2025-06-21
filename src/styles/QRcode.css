@@ -3,17 +3,20 @@
 --------------------------------------*/
 
 :root {
-    /* Primary brand colors */
+    /* Light theme colors */
     --color-primary: #5A67D8;
     --color-secondary: #48BB78;
     --color-accent: #ECC94B;
   
-    /* Neutral colors */
+    /* Light theme neutral colors */
     --color-bg-light: #F7FAFC;
     --color-bg-dark: #2D3748;
     --color-text: #2D3748;
     --color-text-inverse: #F7FAFC;
     --color-border: #CBD5E0;
+    --color-surface: #FFFFFF;
+    --color-surface-secondary: #F7FAFC;
+    --color-shadow: rgba(0, 0, 0, 0.1);
   
     /* Spacing scale */
     --space-xs: 4px;
@@ -30,167 +33,275 @@
     /* Shadows */
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
-  }
-  
-  /*--------------------------------------
-    2. Global Reset & Base Styles
-  --------------------------------------*/
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  html {
-    font-size: 16px;
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    background-color: #4240c5; /* dark background */
-    color: white;
-    color: var(--color-text);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: var(--space-lg);
-  }
-  
-  /*--------------------------------------
-    3. App Container
-  --------------------------------------*/
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+    --color-primary: #667EEA;
+    --color-secondary: #4FD1C7;
+    --color-accent: #F6AD55;
+    
+    /* Dark theme neutral colors */
+    --color-bg-light: #1A202C;
+    --color-bg-dark: #2D3748;
+    --color-text: #F7FAFC;
+    --color-text-inverse: #2D3748;
+    --color-border: #4A5568;
+    --color-surface: #2D3748;
+    --color-surface-secondary: #1A202C;
+    --color-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/*--------------------------------------
+  2. Global Reset & Base Styles
+--------------------------------------*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-lg);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.app-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*--------------------------------------
+  3. App Container
+--------------------------------------*/
+.app-container {
+  background: var(--color-surface);
+  max-width: 400px;
+  width: 100%;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+/* Title */
+.app-container h1 {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-primary);
+  transition: color 0.3s ease;
+}
+
+/*--------------------------------------
+  4. Theme Toggle
+--------------------------------------*/
+.theme-toggle {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--color-text);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(15deg);
+}
+
+/*--------------------------------------
+  5. QR Image
+--------------------------------------*/
+.qr-code-image {
+  display: block;
+  margin: var(--space-md) auto;
+  width: 150px;
+  height: 150px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease;
+}
+
+/*--------------------------------------
+  6. Controls (Inputs & Buttons)
+--------------------------------------*/
+.controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* Labels */
+.input-label {
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  display: block;
+  text-align: left;
+  color: var(--color-text);
+  transition: color 0.3s ease;
+}
+
+/* Text inputs */
+.controls input[type="text"],
+.controls input[type="number"] {
+  width: 100%;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  background: var(--color-surface-secondary);
+  color: var(--color-text);
+  transition: border-color 0.2s, background 0.3s ease, color 0.3s ease;
+}
+
+.controls input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
+}
+
+.controls input::placeholder {
+  color: var(--color-border);
+}
+
+/* Buttons */
+button {
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s, background 0.3s ease;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Generate button */
+.generate-button {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.generate-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  background: var(--color-primary);
+  filter: brightness(1.1);
+}
+
+/* Download button */
+.download-button {
+  background-color: var(--color-secondary);
+  color: var(--color-text-inverse);
+}
+
+.download-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  background: var(--color-secondary);
+  filter: brightness(1.1);
+}
+
+/*--------------------------------------
+  7. Footer
+--------------------------------------*/
+.footer {
+  margin-top: var(--space-lg);
+  font-size: 0.875rem;
+  color: var(--color-border);
+  transition: color 0.3s ease;
+}
+
+.footer a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/*--------------------------------------
+  8. Loading State
+--------------------------------------*/
+.loading-text {
+  color: var(--color-text);
+  font-style: italic;
+  margin: var(--space-sm) 0;
+  transition: color 0.3s ease;
+}
+
+/*--------------------------------------
+  9. Responsive Adjustments
+--------------------------------------*/
+@media (max-width: 480px) {
   .app-container {
-    background: #fff;
-    max-width: 400px;
-    width: 100%;
-    padding: var(--space-lg);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    text-align: center;
+    padding: var(--space-md);
+    margin: var(--space-md);
   }
   
-  /* Title */
-  .app-container h1 {
-    font-size: 1.75rem;
-    margin-bottom: var(--space-md);
-    color: var(--color-primary);
+  .theme-toggle {
+    top: var(--space-sm);
+    right: var(--space-sm);
+    width: 35px;
+    height: 35px;
   }
   
-  /*--------------------------------------
-    4. QR Image
-  --------------------------------------*/
-  .qr-code-image {
-    display: block;
-    margin: var(--space-md) auto;
-    width: 150px;
-    height: 150px;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
+  .theme-toggle svg {
+    width: 18px;
+    height: 18px;
   }
   
-  /*--------------------------------------
-    5. Controls (Inputs & Buttons)
-  --------------------------------------*/
   .controls {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-    margin-top: var(--space-lg);
+    gap: var(--space-sm);
   }
   
-  /* Labels */
-  .input-label {
-    font-weight: 600;
-    margin-bottom: var(--space-xs);
-    display: block;
-    text-align: left;
+  .qr-code-image {
+    width: 120px;
+    height: 120px;
   }
-  
-  /* Text inputs */
-  .controls input[type="text"],
-  .controls input[type="number"] {
-    width: 100%;
-    padding: var(--space-sm);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-    transition: border-color 0.2s;
-  }
-  .controls input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-  }
-  
-  /* Buttons */
-  button {
-    padding: var(--space-sm) var(--space-md);
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.1s;
-  }
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  /* Generate button */
-  .generate-button {
-    background: var(--color-primary);
-    color: var(--color-text-inverse);
-  }
-  .generate-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-  }
-  
-  /* Download button */
-  .download-button {
-    background-color: rgb(5, 172, 5);
-    color: var(--color-text-inverse);
-  }
-  .download-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-  }
-  
-  /*--------------------------------------
-    6. Footer
-  --------------------------------------*/
-  .footer {
-    margin-top: var(--space-lg);
-    font-size: 0.875rem;
-    color: var(--color-border);
-  }
-  .footer a {
-    color: var(--color-accent);
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .footer a:hover {
-    text-decoration: underline;
-  }
-  
-  /*--------------------------------------
-    7. Responsive Adjustments
-  --------------------------------------*/
-  @media (max-width: 480px) {
-    .app-container {
-      padding: var(--space-md);
-    }
-    .controls {
-      gap: var(--space-sm);
-    }
-    .qr-code-image {
-      width: 120px;
-      height: 120px;
-    }
-  }
+}
   

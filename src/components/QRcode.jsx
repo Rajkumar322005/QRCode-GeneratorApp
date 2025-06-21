@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 const QrCode = () => {
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
   const [qrData, setQrData] = useState("");
   const [qrSize, setQrSize] = useState("150");
+  const [theme, setTheme] = useState("light");
+
+  // Load theme from localStorage on component mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("qr-theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  // Update theme and save to localStorage
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("qr-theme", newTheme);
+  };
 
   const generateQR = async () => {
     setLoading(true);
@@ -35,9 +52,42 @@ const QrCode = () => {
 
   return (
     <div className="app-container">
+      {/* Theme Toggle Button */}
+      <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+        {theme === "light" ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+          </svg>
+        )}
+      </button>
+
       <h1>QR CODE GENERATOR</h1>
 
-      {loading && <p>Please wait...</p>}
+      {loading && <p className="loading-text">Please wait...</p>}
       {img && <img src={img} alt="QR Code" className="qr-code-image" />}
 
       <div className="controls">
@@ -83,9 +133,10 @@ const QrCode = () => {
       </div>
 
       <p className="footer">
-        Designed By <span style ={{color:"yellow"}}>Rajesh </span>
+        Designed By <span style={{ color: "var(--color-accent)" }}>Rajesh</span>
       </p>
     </div>
   );
 };
-export default QrCode
+
+export default QrCode;
