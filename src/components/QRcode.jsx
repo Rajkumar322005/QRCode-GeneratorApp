@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 const QrCode = () => {
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,7 +37,7 @@ const QrCode = () => {
     <div className="app-container">
       <h1>QR CODE GENERATOR</h1>
 
-      {loading && <p className="loading-text">Please wait...</p>}
+      {loading && <p>Please wait...</p>}
       {img && <img src={img} alt="QR Code" className="qr-code-image" />}
 
       <div className="controls">
@@ -84,10 +83,9 @@ const QrCode = () => {
       </div>
 
       <p className="footer">
-        Designed By <span style={{ color: "var(--color-accent)" }}>Rajesh</span>
+        Designed By <span style ={{color:"yellow"}}>Rajesh </span>
       </p>
     </div>
   );
 };
-
-export default QrCode;
+export default QrCode
